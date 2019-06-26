@@ -1,10 +1,10 @@
 package com.weilus;
 
 import com.feign.clients.FeignClientService;
+import com.weilus.refresh.MyConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,12 +25,12 @@ public class Test1Controller {
     @Autowired
     FeignClientService service;
 
-    @Value("${test.name:马云}")
-    private String name;
+    @Autowired
+    MyConfig config;
 
     @GetMapping("test/sayHello")
     public String sayHello(HttpServletRequest request){
-        return name;
+        return config.getName();
 //        Enumeration<String> enumeration = request.getHeaderNames();
 //        while (enumeration.hasMoreElements()){
 //            String headerName = enumeration.nextElement();
