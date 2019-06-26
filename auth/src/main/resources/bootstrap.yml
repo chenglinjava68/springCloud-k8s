@@ -5,6 +5,8 @@ spring:
     name: oauth
   cloud:
     kubernetes:
+      name: oauth
+      namespace: default
       config:
         sources:
         - namespace: default
