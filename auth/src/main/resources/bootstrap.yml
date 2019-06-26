@@ -4,15 +4,11 @@ spring:
   application:
     name: oauth
   cloud:
-    config:
-      discovery:
+    kubernetes:
+      config:
+        sources:
+        - namespace: default
+          name: oauth
+      reload:
+        mode: event
         enabled: true
-        service-id: config
-      username: config
-      password: cf123456
-      profile: ${spring.profiles.active}
-      label: master
-      fail-fast: true
-    bus:
-      trace:
-        enabled: true #配置变化跟踪
