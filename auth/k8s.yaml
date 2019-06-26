@@ -11,22 +11,22 @@ data:
           host-name: 10.96.10.102
           port: 6379
           pool:
-             max-idle: 8
-             poolmin-idle: 0
-             poolmax-active: 8
-             poolmax-wait: -1
+            max-idle: 8
+            poolmin-idle: 0
+            poolmax-active: 8
+            poolmax-wait: -1
         datasource:
           druid:
-             driver-class-name: com.mysql.cj.jdbc.Driver
-             url: jdbc:mysql://10.96.10.101:3306/test?Unicode=true&characterEncoding=UTF-8&useSSL=false
-             username: root
-             password: weilus
-             initial-size: 10
-             min-idle: 10
-             max-active: 100
-             max-wait: 6000
-             min-evictable-idle-time-millis: 300000
-             time-between-eviction-runs-millis: 60000
+            driver-class-name: com.mysql.cj.jdbc.Driver
+            url: jdbc:mysql://10.96.10.101:3306/test?Unicode=true&characterEncoding=UTF-8&useSSL=false
+            username: root
+            password: weilus
+            initial-size: 10
+            min-idle: 10
+            max-active: 100
+            max-wait: 6000
+            min-evictable-idle-time-millis: 300000
+            time-between-eviction-runs-millis: 60000
 ---
 kind: Service
 apiVersion: v1
