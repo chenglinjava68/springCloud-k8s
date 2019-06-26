@@ -11,6 +11,3 @@ spring:
         sources:
         - namespace: default
           name: oauth
-      reload:
-        mode: event
-        enabled: true
