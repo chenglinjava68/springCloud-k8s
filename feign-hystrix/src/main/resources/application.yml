@@ -9,10 +9,6 @@ info:
 spring:
   thymeleaf:
     cache: false
-  rabbitmq:
-    addresses: 192.168.198.128:5672
-    username: guest
-    password: guest
   security:
     user:
       name: hystrix
@@ -27,10 +23,6 @@ feign:
         logger-level: full    #NONE,BASIC,HEADERS,FULL
         connect-timeout: 30000    #连接超时
         read-timeout:  10000      #响应超时
-        username: adfeadcclk
-        password: asdf@#$@ASDfad
-        request-interceptors:
-          - com.weilus.commons.feign.interceptors.DebugRequestInterceptor      #传递DEBUG参数到下一个服务
 
 hystrix:
   command:
@@ -38,10 +30,6 @@ hystrix:
       execution:
         isolation:
           strategy: SEMAPHORE #信号量隔离模式
-
-feign-service:
-  ribbon:
-    NFLoadBalancerRuleClassName: com.weilus.commons.ribbon.rules.DebugRibbonRule # DEBUG 优先策略
 
 logging:
   file: ${log.dir:/data/logs}/${spring.application.name}.log
