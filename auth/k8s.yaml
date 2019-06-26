@@ -8,7 +8,7 @@ data:
       spring:
         redis:
           database: 0
-          host-name: 10.96.10.102
+          host: 10.96.10.102
           port: 6379
           pool:
             max-idle: 8
