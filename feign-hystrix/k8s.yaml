@@ -1,0 +1,49 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: feign-call
+  namespace: default
+data:
+  test.name: 张学友
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: feign-call
+spec:
+  ports:
+  - port: 8081
+    protocol: TCP
+    targetPort: 8081
+  selector:
+    app: weilus.cloud-feign-call
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: weilus.cloud-feign-call
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: weilus.cloud-feign-call
+  template:
+    metadata:
+      labels:
+        app: weilus.cloud-feign-call
+    spec:
+      containers:
+      - name: oauth
+        image: registry.cn-hangzhou.aliyuncs.com/weilus923/feign-call-k8s:1.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8081
+        volumeMounts:
+        - name: config-logs
+          mountPath: /data/logs
+      volumes:
+      - name: config-logs
+        hostPath:
+          path: /data/logs
+      imagePullSecrets:
+      - name: docker-registry-key
