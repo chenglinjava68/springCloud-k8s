@@ -17,6 +17,12 @@ kubectl apply -f https://raw.githubusercontent.com/weilus923/springCloud-k8s/mas
 > 1. spring-cloud-starter-kubernetes-config
     kubernetes configMap配置
 
+> 2. 自动更新配置
+
+```
+    kubectl edit configmap feign-call
+```
+
 ### 用户中心 oauth2
 
 #### 用户申请令牌

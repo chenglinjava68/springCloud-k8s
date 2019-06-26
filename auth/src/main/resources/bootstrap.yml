@@ -14,4 +14,3 @@ spring:
       reload:
         mode: event
         enabled: true
-        strategy: refresh
