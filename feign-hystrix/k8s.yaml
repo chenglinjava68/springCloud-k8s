@@ -33,7 +33,7 @@ spec:
         app: weilus.cloud-feign-call
     spec:
       containers:
-      - name: oauth
+      - name: feign-call
         image: registry.cn-hangzhou.aliyuncs.com/weilus923/feign-call-k8s:1.0
         imagePullPolicy: IfNotPresent
         ports:
