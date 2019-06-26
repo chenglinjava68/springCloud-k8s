@@ -1,0 +1,64 @@
+server:
+  port: 8088
+info:
+  groupId: @project.groupId@
+  artifactId: @project.artifactId@
+  version: @project.version@
+
+feign:
+  hystrix:
+    enabled: true
+  client:
+    config:
+      oauth:
+        logger-level: full    #NONE,BASIC,HEADERS,FULL
+        connect-timeout: 30000    #连接超时
+        read-timeout:  10000      #响应超时
+
+spring:
+  profiles:
+    active: test
+  application:
+    name: gateway
+  security:
+    user:
+      name: sba-user
+      password: sba-pwd
+  cloud:
+    gateway:
+      routes:
+      - id: oauth
+        uri: lb://oauth
+        predicates:
+        - Path=/oauth/oauth/token
+        filters:
+        - StripPrefix=1
+
+      - id: feign-call
+        uri: lb://feign-call
+        predicates:
+        - Path=/feign-call/test/sayHello
+        filters:
+        - StripPrefix=1
+        - CheckToken
+
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+
+logging:
+  file: ${log.dir:/data/logs}/${spring.application.name}.log
+  level:
+    com.feign.clients: DEBUG
+    com.weilus: DEBUG
+    com.netflix.discovery: ERROR
+    org.springframework.security: ERROR
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always

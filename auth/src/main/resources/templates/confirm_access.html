@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div class="container">
+    <h2>请确认是否授权</h2>
+
+    <form th:action="@{/oauth/authorize}" method="post">
+        <input name="user_oauth_approval" value="true" type="hidden" />
+        <input th:name="${s.key}" value="true" type="hidden" th:each="s : ${scopes}" />
+        <input name='authorize' value='确认授权' type='submit' />
+    </form>
+    <form th:action="@{/oauth/authorize}" method="post">
+        <input name="user_oauth_approval" value="false" type="hidden" />
+        <input th:name="${s.key}" value="false" type="hidden" th:each="s : ${scopes}" />
+        <input name='authorize' value='取消授权' type='submit' />
+    </form>
+</div>
+</body>
+</html>

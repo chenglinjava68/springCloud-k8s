@@ -1,0 +1,41 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: gateway
+spec:
+  ports:
+  - port: 8088
+    protocol: TCP
+    targetPort: 8088
+  selector:
+    app: weilus.cloud-gateway
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weilus.cloud-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: weilus.cloud-gateway
+  template:
+    metadata:
+      labels:
+        app: weilus.cloud-gateway
+    spec:
+      containers:
+      - name: gateway
+        image: registry.cn-hangzhou.aliyuncs.com/weilus923/k8s-gateway:1.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8088
+        volumeMounts:
+        - name: config-logs
+          mountPath: /data/logs
+      volumes:
+      - name: config-logs
+        hostPath:
+          path: /data/logs
+      imagePullSecrets:
+      - name: docker-registry-key

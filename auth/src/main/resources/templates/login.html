@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>登录页面</title>
+    <meta charset="utf-8"/>
+</head>
+<body>
+<div class="container">
+    <form th:action="@{/login}" method="post">
+        <input name="username" type="text"/>
+        <input name="password" type="text"/>
+        <input type="submit" value="登录"/>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+server:
+  port: 8888
+info:
+  groupId: @project.groupId@
+  artifactId: @project.artifactId@
+  version: @project.version@
+
+spring:
+  application:
+    name: admin
+  security:
+    user:
+      name: admin
+      password: admin
+  boot:
+    admin:
+      routes:
+        endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,loggers,auditevents,hystrix.stream,turbine.stream
+      discovery:
+        ignored-services: ${spring.application.name}
+      turbine:
+        location: ${spring.application.name}
+        clusters: ${turbine.aggregator.clusterConfig}
+
+turbine:
+  appConfig: FEIGN-CALL
+  instanceUrlSuffix: actuator/hystrix.stream              #  managemant.context-path/hystrix.stream
+  aggregator:
+    clusterConfig: TEST-TURBINE,FEIGN
+  clusterNameExpression: metadata['cluster']
+
+logging:
+  file: ${log.dir:/data/logs}/${spring.application.name}.log
+  level:
+    com.weilus: DEBUG
+    com.netflix.discovery: ERROR
+    org.springframework: INFO

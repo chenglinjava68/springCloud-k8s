@@ -1,0 +1,38 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: rabbitmq
+spec:
+  ports:
+  - port: 5672
+    protocol: TCP
+    targetPort: 5672
+  clusterIP: 10.96.10.103
+  selector:
+    app: weilus.cloud-rabbitmq
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: weilus.cloud-rabbitmq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: weilus.cloud-rabbitmq
+  template:
+    metadata:
+      labels:
+        app: weilus.cloud-rabbitmq
+    spec:
+      containers:
+      - name: rabbitmq
+        image: rabbitmq:3-management
+        env:
+        - name: RABBITMQ_DEFAULT_USER
+          value: guest
+        - name: RABBITMQ_DEFAULT_PASS
+          value: guest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5672

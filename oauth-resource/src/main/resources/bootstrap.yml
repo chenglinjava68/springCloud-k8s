@@ -1,0 +1,18 @@
+spring:
+  profiles:
+    active: test
+  application:
+    name: oauthResource
+  cloud:
+    config:
+      fail-fast: true
+      discovery:
+        enabled: true
+        service-id: config
+      username: config
+      password: cf123456
+      profile: ${spring.profiles.active}
+      label: master
+    bus:
+      trace:
+        enabled: true #配置变化跟踪

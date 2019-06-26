@@ -1,0 +1,17 @@
+spring:
+  rabbitmq:
+    addresses: 192.168.198.128:5672
+    username: guest
+    password: guest
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE #信号量隔离模式
+serviceProducer: #微服务serviceProducer 负载均衡策略(灰度发布策略)
+  ribbon:
+#    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.ZoneAvoidanceRule
+#    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
+    NFLoadBalancerRuleClassName: com.weilus.serviceCustomer.GrayRibbonRule

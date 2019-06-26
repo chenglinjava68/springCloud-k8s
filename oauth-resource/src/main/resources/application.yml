@@ -1,0 +1,64 @@
+debug: false
+server:
+  port: 8081
+
+info:
+  groupId: @project.groupId@
+  artifactId: @project.artifactId@
+  version: @project.version@
+
+spring:
+  thymeleaf:
+    cache: false
+  security:
+    user:
+      name: sba-user
+      password: sba-pwd
+feign:
+  hystrix:
+    enabled: true
+  client:
+    config:
+      oauth:
+        logger-level: full    #NONE,BASIC,HEADERS,FULL
+        connect-timeout: 30000    #连接超时
+        read-timeout:  10000      #响应超时
+        username: sba-user
+        password: sba-pwd
+        request-interceptors:
+          - com.weilus.commons.feign.interceptors.DebugRequestInterceptor      #传递DEBUG参数到下一个服务
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE #信号量隔离模式
+
+security:
+  metadata-source:
+    no-check-token:
+    - GET /teee1
+    - POST /a/b/c
+    - /ficon.con
+    rules:              #自定义资源访问规则  <PATH_PATTERN>:<HAS_ROLES>
+      GET /test: A
+      POST /add: B,C
+      POST /api/user/**: user:*,user:add,user:del,user:upd,user:get
+
+
+logging:
+  file: ${log.dir:/data/logs}/${spring.application.name}.log
+  level:
+    com.feign.clients: DEBUG
+    com.weilus: DEBUG
+    org.springframework.jdbc: DEBUG
+    com.netflix.discovery: ERROR
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always

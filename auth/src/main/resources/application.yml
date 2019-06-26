@@ -1,0 +1,31 @@
+debug: false
+server:
+  port: 8080
+
+info:
+  groupId: @project.groupId@
+  artifactId: @project.artifactId@
+  version: @project.version@
+
+spring:
+  thymeleaf:
+    cache: false
+
+logging:
+  file: ${log.dir:/data/logs}/${spring.application.name}.log
+  level:
+    com.weilus: DEBUG
+    com.netflix.discovery: ERROR
+    org.springframework: INFO
+    org.springframework.security: DEBUG
+    org.apache.ibatis: INFO
+    org.springframework.jdbc: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always

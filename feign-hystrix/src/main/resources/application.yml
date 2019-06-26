@@ -1,0 +1,61 @@
+debug: false
+server:
+  port: 8081
+info:
+  groupId: @project.groupId@
+  artifactId: @project.artifactId@
+  version: @project.version@
+
+spring:
+  thymeleaf:
+    cache: false
+  rabbitmq:
+    addresses: 192.168.198.128:5672
+    username: guest
+    password: guest
+  security:
+    user:
+      name: hystrix
+      password: hy123456
+      roles: USER
+feign:
+  hystrix:
+    enabled: true #开启熔断
+  client:
+    config:
+      feign-service:
+        logger-level: full    #NONE,BASIC,HEADERS,FULL
+        connect-timeout: 30000    #连接超时
+        read-timeout:  10000      #响应超时
+        username: adfeadcclk
+        password: asdf@#$@ASDfad
+        request-interceptors:
+          - com.weilus.commons.feign.interceptors.DebugRequestInterceptor      #传递DEBUG参数到下一个服务
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE #信号量隔离模式
+
+feign-service:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.weilus.commons.ribbon.rules.DebugRibbonRule # DEBUG 优先策略
+
+logging:
+  file: ${log.dir:/data/logs}/${spring.application.name}.log
+  level:
+    root: INFO
+    com.feign.clients: DEBUG
+    com.weilus: DEBUG
+    org.springframework.jdbc: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
