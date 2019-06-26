@@ -6,27 +6,16 @@ kubectl create rolebinding default-view-binding \
 --serviceaccount=default:default \
 --namespace=default
 ```
-### 配置中心 config
-> 1. docker安装rabbitMq
+
+### 基础设施 db redis
 ```
-docker run -d --name=RABBITMQ -p 5672:5672 -p 15672:15672 \
--e RABBITMQ_DEFAULT_USER=guest -e RABBITMQ_DEFAULT_PASS=guest \
-rabbitmq:3-management
+kubectl apply -f https://raw.githubusercontent.com/weilus923/springCloud-k8s/master/k8s-mysql-svc.yaml
+kubectl apply -f https://raw.githubusercontent.com/weilus923/springCloud-k8s/master/k8s-redis-svc.yaml
 ```
 
-> 2. 变更config配置,使配置自动生效
-```
-    version 1.5.x
-    curl -X POST http://config:cf123456@192.168.198.1:7000/bus/refresh?destination=gateway:**
-
-    version 2.x
-    curl -v -X POST http://config:cf123456@192.168.198.1:7000/actuator/bus-refresh/gateway:**
-```
-
-> 3. 向eureka指定IP:  EUREKA_INSTANCE_IP-ADDRESS
-```
-    docker run -d -v /data/logs:/tmp/logs --name=config -e EUREKA_INSTANCE_IP-ADDRESS=192.168.198.128 -p 7000:7000 weiluscloud/config
-```
+### kubernetes 集中配置管理
+> 1. spring-cloud-starter-kubernetes-config
+    kubernetes configMap配置
 
 ### 用户中心 oauth2
 
