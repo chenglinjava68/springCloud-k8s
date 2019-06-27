@@ -30,6 +30,9 @@ public class SecuritySecureConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers(adminContextPath + "/assets/**").permitAll()
                 .antMatchers(adminContextPath + "/login").permitAll()
+
+                .mvcMatchers(adminContextPath + "/hystrix/**").permitAll()
+
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage(adminContextPath + "/login").successHandler(successHandler).and()
