@@ -15,21 +15,23 @@ spring:
       password: hy123456
       roles: USER
 feign:
+  okhttp:
+    enabled: true
+  httpclient:
+    enabled: false
   hystrix:
     enabled: true #开启熔断
   client:
     config:
+      default:
+        loggerLevel: basic
+        connect-timeout: 5000
+        read-timeout: 5000
       feign-service:
-        logger-level: full    #NONE,BASIC,HEADERS,FULL
-        connect-timeout: 30000    #连接超时
-        read-timeout:  10000      #响应超时
+        logger-level: full
+        connect-timeout: 30000
+        read-timeout:  10000
 
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          strategy: SEMAPHORE #信号量隔离模式
 
 logging:
   file: ${log.dir:/data/logs}/${spring.application.name}.log

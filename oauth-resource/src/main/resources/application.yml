@@ -10,10 +10,6 @@ info:
 spring:
   thymeleaf:
     cache: false
-  security:
-    user:
-      name: sba-user
-      password: sba-pwd
 feign:
   hystrix:
     enabled: true
