@@ -2,6 +2,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: rabbitmq
+  namespace: weilus-cloud
 spec:
   ports:
   - port: 5672
@@ -9,21 +10,24 @@ spec:
     targetPort: 5672
   clusterIP: 10.96.10.103
   selector:
-    app: weilus.cloud-rabbitmq
+    app: rabbitmq
 ---
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: weilus.cloud-rabbitmq
+  name: rabbitmq
+  namespace: weilus-cloud
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: weilus.cloud-rabbitmq
+      app: rabbitmq
   template:
     metadata:
+      name: rabbitmq
+      namespace: weilus-cloud
       labels:
-        app: weilus.cloud-rabbitmq
+        app: rabbitmq
     spec:
       containers:
       - name: rabbitmq
