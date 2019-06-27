@@ -1,0 +1,43 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: admin
+spec:
+  ports:
+  - port: 8888
+    protocol: TCP
+    targetPort: 8888
+    nodePort: 31888
+  type: NodePort
+  selector:
+    app: weilus.cloud-admin
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: weilus.cloud-admin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: weilus.cloud-admin
+  template:
+    metadata:
+      labels:
+        app: weilus.cloud-admin
+    spec:
+      containers:
+      - name: admin
+        image: registry.cn-hangzhou.aliyuncs.com/weilus923/admin-k8s:1.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8888
+        volumeMounts:
+        - name: config-logs
+          mountPath: /data/logs
+      volumes:
+      - name: config-logs
+        hostPath:
+          path: /data/logs
+      imagePullSecrets:
+      - name: docker-registry-key
