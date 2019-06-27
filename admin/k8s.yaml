@@ -2,6 +2,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: admin
+  namespace: weilus.cloud
 spec:
   ports:
   - port: 8888
@@ -10,21 +11,22 @@ spec:
     nodePort: 31888
   type: NodePort
   selector:
-    app: weilus.cloud-admin
+    app: admin
 ---
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: weilus.cloud-admin
+  name: admin
+  namespace: weilus.cloud
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: weilus.cloud-admin
+      app: admin
   template:
     metadata:
       labels:
-        app: weilus.cloud-admin
+        app: admin
     spec:
       containers:
       - name: admin

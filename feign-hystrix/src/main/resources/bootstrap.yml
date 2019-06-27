@@ -5,10 +5,11 @@ spring:
     name: feign-service
   cloud:
     kubernetes:
+      name: ${spring.application.name}
+      namespace: default
       config:
         sources:
-        - namespace: default
-          name: ${spring.application.name}
+        - namespace: weilus.cloud
       reload:
         mode: event
         enabled: true

@@ -2,6 +2,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: redis
+  namespace: weilus.cloud
 spec:
   ports:
   - port: 6379
@@ -9,21 +10,24 @@ spec:
     targetPort: 6379
   clusterIP: 10.96.10.102
   selector:
-    app: weilus.cloud-redis
+    app: redis
 ---
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: weilus.cloud-redis
+  name: redis
+  namespace: weilus.cloud
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: weilus.cloud-redis
+      app: redis
   template:
+    name: redis
+    namespace: weilus.cloud
     metadata:
       labels:
-        app: weilus.cloud-redis
+        app: redis
     spec:
       containers:
       - name: redis

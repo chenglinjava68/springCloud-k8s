@@ -2,27 +2,29 @@ kind: Service
 apiVersion: v1
 metadata:
   name: gateway
+  namespace: weilus.cloud
 spec:
   ports:
   - port: 8088
     protocol: TCP
     targetPort: 8088
   selector:
-    app: weilus.cloud-gateway
+    app: gateway
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: weilus.cloud-gateway
+  name: gateway
+  namespace: weilus.cloud
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: weilus.cloud-gateway
+      app: gateway
   template:
     metadata:
       labels:
-        app: weilus.cloud-gateway
+        app: gateway
     spec:
       containers:
       - name: gateway

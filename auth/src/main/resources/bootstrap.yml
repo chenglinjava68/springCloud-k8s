@@ -5,12 +5,11 @@ spring:
     name: oauth
   cloud:
     kubernetes:
-      name: oauth
+      name: ${spring.application.name}
       namespace: default
       config:
         sources:
-        - namespace: default
-          name: oauth
+        - namespace: weilus.cloud
       reload:
         mode: event
         enabled: true

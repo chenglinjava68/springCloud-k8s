@@ -2,7 +2,7 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: feign-service
-  namespace: default
+  namespace: weilus.cloud
 data:
   test.name: 张学友
 ---
@@ -10,27 +10,31 @@ kind: Service
 apiVersion: v1
 metadata:
   name: feign-service
+  namespace: weilus.cloud
 spec:
   ports:
   - port: 8081
     protocol: TCP
     targetPort: 8081
   selector:
-    app: weilus.cloud-feign-service
+    app: feign-service
 ---
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: weilus.cloud-feign-service
+  name: feign-service
+  namespace: weilus.cloud
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: weilus.cloud-feign-service
+      app: feign-service
   template:
+    name: feign-service
+    namespace: weilus.cloud
     metadata:
       labels:
-        app: weilus.cloud-feign-service
+        app: feign-service
     spec:
       containers:
       - name: feign-service

@@ -2,7 +2,7 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: oauth
-  namespace: default
+  namespace: weilus.cloud
 data:
   application.yml: |-
       spring:
@@ -21,27 +21,29 @@ kind: Service
 apiVersion: v1
 metadata:
   name: oauth
+  namespace: weilus.cloud
 spec:
   ports:
   - port: 8080
     protocol: TCP
     targetPort: 8080
   selector:
-    app: weilus.cloud-oauth
+    app: oauth
 ---
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: weilus.cloud-oauth
+  name: oauth
+  namespace: weilus.cloud
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: weilus.cloud-oauth
+      app: oauth
   template:
     metadata:
       labels:
-        app: weilus.cloud-oauth
+        app: oauth
     spec:
       containers:
       - name: oauth

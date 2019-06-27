@@ -2,6 +2,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: mysql
+  namespace: weilus.cloud
 spec:
   ports:
   - port: 3306
@@ -11,21 +12,24 @@ spec:
   type: NodePort
   clusterIP: 10.96.10.101
   selector:
-    app: weilus.cloud-mysql
+    app: mysql
 ---
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: weilus.cloud-mysql
+  name: mysql
+  namespace: weilus.cloud
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: weilus.cloud-mysql
+      app: mysql
   template:
+    name: mysql
+    namespace: weilus.cloud
     metadata:
       labels:
-        app: weilus.cloud-mysql
+        app: mysql
     spec:
       containers:
       - name: mysql
