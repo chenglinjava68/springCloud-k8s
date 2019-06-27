@@ -18,12 +18,13 @@ public class WebSecurityConfig{
     public static class ApiConfigurer extends WebSecurityConfigurerAdapter {
         protected void configure(HttpSecurity http) throws Exception {
             http.csrf().disable();
-            http
-                    .antMatcher("/api/**").authorizeRequests().anyRequest().hasRole("USER")
-                    .and()
-                    .antMatcher("/test/**").authorizeRequests().anyRequest().hasRole("USER")
-                    .and()
-                    .httpBasic();
+            http.authorizeRequests().mvcMatchers("/api/**").authenticated().and().httpBasic();
+//            http
+//                    .antMatcher("/api/**").authorizeRequests().anyRequest().hasRole("USER")
+//                    .and()
+//                    .antMatcher("/test/**").authorizeRequests().anyRequest().hasRole("USER")
+//                    .and()
+//                    .httpBasic();
         }
     }
 }
