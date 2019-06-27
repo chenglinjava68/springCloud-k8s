@@ -23,6 +23,8 @@ spec:
       app: gateway
   template:
     metadata:
+      name: gateway
+      namespace: weilus.cloud
       labels:
         app: gateway
     spec:

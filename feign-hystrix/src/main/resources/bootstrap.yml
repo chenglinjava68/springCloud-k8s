@@ -9,7 +9,7 @@ spring:
       namespace: default
       config:
         sources:
-        - namespace: weilus.cloud
+        - namespace: weilus-cloud
       reload:
         mode: event
         enabled: true
