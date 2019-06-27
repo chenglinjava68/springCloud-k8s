@@ -1,14 +1,12 @@
 spring:
   profiles:
     active: test
-  application:
-    name: feign-call
   cloud:
     kubernetes:
       config:
         sources:
         - namespace: default
-          name: feign-call
+          name: ${spring.application.name}
       reload:
         mode: event
         enabled: true

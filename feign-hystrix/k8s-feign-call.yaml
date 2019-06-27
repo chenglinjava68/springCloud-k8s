@@ -34,8 +34,11 @@ spec:
     spec:
       containers:
       - name: feign-call
-        image: registry.cn-hangzhou.aliyuncs.com/weilus923/feign-call-k8s:1.0
+        image: registry.cn-hangzhou.aliyuncs.com/weilus923/feign-hystrix-k8s:1.0
         imagePullPolicy: IfNotPresent
+        env:
+        - name: spring.application.name
+          value: feign-call
         ports:
         - containerPort: 8081
         volumeMounts:

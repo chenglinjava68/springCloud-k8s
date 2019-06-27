@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
+import java.util.Enumeration;
 
 /**
  * Created by liutq on 2018/12/12.
@@ -30,16 +31,18 @@ public class Test1Controller {
 
     @GetMapping("test/sayHello")
     public String sayHello(HttpServletRequest request){
-        return config.getName();
-//        Enumeration<String> enumeration = request.getHeaderNames();
-//        while (enumeration.hasMoreElements()){
-//            String headerName = enumeration.nextElement();
-//            String header = request.getHeader(headerName);
-//            LOGGER.info("feign-call header [{}] : {}",headerName,header);
-//        }
-//        return service.sayHello(Collections.singletonMap("name", "jhon"));
+        Enumeration<String> enumeration = request.getHeaderNames();
+        while (enumeration.hasMoreElements()){
+            String headerName = enumeration.nextElement();
+            String header = request.getHeader(headerName);
+            LOGGER.info("feign-call header [{}] : {}",headerName,header);
+        }
+        return service.sayHello(Collections.singletonMap("name", "jhon"));
     }
-
+    @GetMapping("test/sayName")
+    public String sayName(HttpServletRequest request){
+        return config.getName();
+    }
     @GetMapping("test/hiMan")
     public String hiMan(){
         return service.hiMan(Collections.singletonMap("name", "jhon"));

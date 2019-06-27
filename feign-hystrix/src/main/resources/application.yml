@@ -13,7 +13,6 @@ spring:
     user:
       name: hystrix
       password: hy123456
-#      roles: USER
 feign:
   okhttp:
     enabled: true
