@@ -16,8 +16,6 @@ spring:
     admin:
       routes:
         endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,loggers,auditevents,hystrix.stream,turbine.stream
-      discovery:
-        ignored-services: ${spring.application.name}
       turbine:
         location: ${spring.application.name}
         clusters: ${turbine.aggregator.clusterConfig}

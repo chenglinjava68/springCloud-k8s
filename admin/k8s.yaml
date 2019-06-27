@@ -30,6 +30,9 @@ spec:
       - name: admin
         image: registry.cn-hangzhou.aliyuncs.com/weilus923/admin-k8s:1.0
         imagePullPolicy: IfNotPresent
+        env:
+        - name: spring.boot.admin.discovery.services
+          value: oauth,feign-call,feign-service,admin
         ports:
         - containerPort: 8888
         volumeMounts:
