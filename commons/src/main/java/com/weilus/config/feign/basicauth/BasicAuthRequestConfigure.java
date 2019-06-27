@@ -12,11 +12,11 @@ public class BasicAuthRequestConfigure{
 
     @Bean
     @RefreshScope
-    @ConditionalOnProperty(value = {"spring.security.user.username","spring.security.user.password"})
+    @ConditionalOnProperty(value = {"spring.security.user.name","spring.security.user.password"})
     public BasicAuthRequestInterceptor basicAuthRequestInterceptor(
-            @Value("${spring.security.user.username}") String username,
+            @Value("${spring.security.user.name}") String name,
             @Value("${spring.security.user.password}") String password){
-        return new BasicAuthRequestInterceptor(username,password);
+        return new BasicAuthRequestInterceptor(name,password);
     }
 
 }

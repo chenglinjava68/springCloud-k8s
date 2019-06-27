@@ -21,7 +21,7 @@ import java.util.Map;
 @RestController
 public class Test2Controller {
     public static final Logger LOGGER = LoggerFactory.getLogger(Test2Controller.class);
-//curl -H "Content-Type: application/json" -X POST  --data '{"name":"德华"}' http://hystrix:hy23456@10.104.119.114:8081/api/sayHello
+//curl -H "Content-Type: application/json" -X POST  --data '{"name":"德华"}' http://hystrix:hy123456@10.104.119.114:8081/api/sayHello
     @RequestMapping(value="/api/sayHello",method= RequestMethod.POST)
     public String sayHello(HttpServletRequest request, @RequestBody Map<String, String> map){
         Enumeration<String> enumeration = request.getHeaderNames();

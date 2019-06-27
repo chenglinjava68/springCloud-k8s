@@ -13,7 +13,6 @@ spring:
     user:
       name: hystrix
       password: hy123456
-      roles: call-api
 feign:
   okhttp:
     enabled: true
@@ -40,7 +39,7 @@ logging:
     com.feign.clients: DEBUG
     com.weilus: DEBUG
     org.springframework.jdbc: DEBUG
-
+    org.springframework.security: DEBUG
 management:
   endpoints:
     web:

@@ -1,7 +1,6 @@
 package com.weilus;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -10,18 +9,15 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  * @program springCloud
  * @date 2019-05-23 14:27
  **/
+@Configuration
 @EnableWebSecurity
-public class WebSecurityConfig{
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Configuration
-    @Order(1)
-    public static class ApiConfigurer extends WebSecurityConfigurerAdapter {
-        protected void configure(HttpSecurity http) throws Exception {
-            http.csrf().disable();
-            http
-                    .antMatcher("/api/**").authorizeRequests().anyRequest().hasRole("call-api")
-                    .and()
-                    .httpBasic();
-        }
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
+        http.authorizeRequests().mvcMatchers("/api/**").authenticated()
+                .and()
+                .httpBasic();
     }
+
 }
