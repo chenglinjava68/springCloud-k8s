@@ -13,6 +13,7 @@ spring:
     user:
       name: hystrix
       password: hy123456
+      roles: call-api
 feign:
   okhttp:
     enabled: true
