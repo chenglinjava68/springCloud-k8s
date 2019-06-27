@@ -9,10 +9,7 @@ info:
 spring:
   thymeleaf:
     cache: false
-  security:
-    user:
-      name: hystrix
-      password: hy123456
+
 feign:
   okhttp:
     enabled: true
