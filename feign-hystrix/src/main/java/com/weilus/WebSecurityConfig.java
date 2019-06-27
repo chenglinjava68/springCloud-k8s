@@ -18,7 +18,10 @@ public class WebSecurityConfig{
     public static class ApiConfigurer extends WebSecurityConfigurerAdapter {
         protected void configure(HttpSecurity http) throws Exception {
             http.csrf().disable();
-            http.authorizeRequests().mvcMatchers("/api/**").hasRole("call-api").and().httpBasic();
+            http
+                    .antMatcher("/api/**").authorizeRequests().anyRequest().hasRole("call-api")
+                    .and()
+                    .httpBasic();
         }
     }
 }
