@@ -11,6 +11,10 @@ spring:
   thymeleaf:
     cache: false
 feign:
+  okhttp:
+    enabled: true
+  httpclient:
+    enabled: false
   hystrix:
     enabled: true
   client:
@@ -23,12 +27,6 @@ feign:
         password: sba-pwd
         request-interceptors:
           - com.weilus.commons.feign.interceptors.DebugRequestInterceptor      #传递DEBUG参数到下一个服务
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          strategy: SEMAPHORE #信号量隔离模式
 
 security:
   metadata-source:

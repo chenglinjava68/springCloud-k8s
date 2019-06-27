@@ -1,5 +1,7 @@
 package com.weilus.gateway;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.feign.clients.OauthClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -76,7 +78,16 @@ public class CheckTokenGatewayFilterFactory extends AbstractGatewayFilterFactory
         ServerHttpResponse response = exchange.getResponse();
         HttpHeaders httpHeaders = response.getHeaders();
         httpHeaders.add("Content-Type", "application/json; charset=UTF-8");
-        DataBuffer bodyBuffer = response.bufferFactory().wrap(error.getMsg().getBytes());//设置body
+        byte[] resp = new byte[0];
+        try {
+            Map<String,String> err = new HashMap<>();
+            err.put("code",error.name());
+            err.put("msg",error.getMsg());
+            resp = new ObjectMapper().writeValueAsBytes(err);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        DataBuffer bodyBuffer = response.bufferFactory().wrap(resp);//设置body
         return response.writeWith(Mono.just(bodyBuffer));
     }
 
