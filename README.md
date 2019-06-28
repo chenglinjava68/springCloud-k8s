@@ -40,14 +40,14 @@ kubectl apply -f https://raw.githubusercontent.com/weilus923/springCloud-k8s/mas
 ```
 #### 用户申请令牌
 ```
-curl -X POST -d 'grant_type=password&client_id=acme&username=liutaiq&password=123456' \
-http://acme:acmesecret@192.168.198.128:8088/oauth/oauth/token
+curl -X POST http://acme:acmesecret@10.96.10.96:8088/oauth/oauth/token
+-d 'grant_type=password&client_id=acme&username=liutaiq&password=123456'
 ```
 
 #### 受信任的机构申请令牌
 ```
-curl -X POST -d 'grant_type=client_credentials' \
-http://accc:acccsecret@127.0.0.1:8080/oauth/token
+curl -X POST http://accc:acccsecret@10.96.10.96:8088/oauth/oauth/token \
+-d 'grant_type=client_credentials'
 ```
 
 #### 授权码申请令牌
@@ -59,23 +59,29 @@ http://127.0.0.1:8080/oauth/authorize?client_id=acau&response_type=code&scope=us
 
 > 机构获取授权码; 申请令牌
 ```
-curl -X POST -d 'grant_type=authorization_code&code=pg4Vz2&redirect_uri=http://aa.ccdd'  \
-http://acau:acausecret@127.0.0.1:8080/oauth/token
+curl -X POST http://acau:acausecret@10.96.10.96:8088/oauth/oauth/token \
+-d 'grant_type=authorization_code&code=pg4Vz2&redirect_uri=http://aa.ccdd'
 ```
 
 ### 网关 gateway
 ```
 kubectl apply -f https://raw.githubusercontent.com/weilus923/springCloud-k8s/master/gateway/k8s.yaml
 ```
-#### 更新路由
+#### 新增/更新路由 /actuator/gateway/routes/{id}
 ```
-curl -H 'Content-Type: application/json' \
--X POST --data='{"uri":"lb://oauth","predicates":["Path=/oauth/**"],"filters":["StripPrefix=1"]}' \
-http://10.96.10.96:8088/actuator/gateway/routes/oauth
+curl -H 'Content-Type: application/json' -X POST http://10.96.10.96:8088/actuator/gateway/routes/oauth \
+--data '{"uri":"lb://oauth","predicates":["Path=/oauth/**"],"filters":["StripPrefix=1"]}'
 ```
-#### 路由列表
+
+#### 查询路由 /actuator/gateway/routes/{id}
 ```
-curl http://10.96.10.96:8088/actuator/gateway/routes
+curl -X GET http://10.96.10.96:8088/actuator/gateway/routes          //列表
+curl -X GET http://10.96.10.96:8088/actuator/gateway/routes/oauth    //查询有个
+```
+
+#### 删除路由 /actuator/gateway/routes/{id}
+```
+curl -X DELETE http://10.96.10.96:8088/actuator/gateway/routes/oauth
 ```
 
 ### 熔断 hystrix
@@ -83,7 +89,6 @@ curl http://10.96.10.96:8088/actuator/gateway/routes
 kubectl apply -f https://raw.githubusercontent.com/weilus923/springCloud-k8s/master/feign-hystrix/k8s-feign-service.yaml
 kubectl apply -f https://raw.githubusercontent.com/weilus923/springCloud-k8s/master/feign-hystrix/k8s-feign-call.yaml
 ```
-
 
 ### 微服务监控 admin
 
