@@ -40,7 +40,7 @@ kubectl apply -f https://raw.githubusercontent.com/weilus923/springCloud-k8s/mas
 ```
 #### 用户申请令牌
 ```
-curl -X POST http://acme:acmesecret@10.96.10.96:8088/oauth/oauth/token
+curl -X POST http://acme:acmesecret@10.96.10.96:8088/oauth/oauth/token \
 -d 'grant_type=password&client_id=acme&username=liutaiq&password=123456'
 ```
 
@@ -88,7 +88,12 @@ curl -X DELETE http://10.96.10.96:8088/actuator/gateway/routes/oauth
 ```
 kubectl apply -f https://raw.githubusercontent.com/weilus923/springCloud-k8s/master/feign-hystrix/k8s-feign-service.yaml
 kubectl apply -f https://raw.githubusercontent.com/weilus923/springCloud-k8s/master/feign-hystrix/k8s-feign-call.yaml
+
+curl -H 'Authorization: Bearer eb8ebbce-1ab0-4e2a-9427-0ffe0e384fc4' \
+http://10.96.10.96:8088/feign-call/test/sayHello
 ```
+
+
 
 ### 微服务监控 admin
 

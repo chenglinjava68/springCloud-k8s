@@ -46,9 +46,10 @@ public class CheckTokenGatewayFilterFactory extends AbstractGatewayFilterFactory
             if (map.containsKey("error")) {
                 return response(exchange, ErrorToekn.ERROR_TOEKN);
             }else {
-                System.out.println(map);
                 Set<String> scope = extractScope(map);
-                String serviceId = StringUtils.tokenizeToStringArray(request.getURI().getRawPath(), "/")[0];
+                String[] arr = StringUtils.tokenizeToStringArray(request.getURI().getRawPath(), "/");
+                System.out.println(Arrays.toString(arr));
+                String serviceId = arr[0];
                 if(scope.contains(serviceId)){
                     return chain.filter(exchange);
                 }else {
