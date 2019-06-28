@@ -24,23 +24,6 @@ spring:
     user:
       name: sba-user
       password: sba-pwd
-  cloud:
-    gateway:
-      routes:
-      - id: oauth
-        uri: lb://oauth
-        predicates:
-        - Path=/oauth/oauth/token
-        filters:
-        - StripPrefix=1
-
-      - id: feign-call
-        uri: lb://feign-call
-        predicates:
-        - Path=/feign-call/test/sayHello
-        filters:
-        - StripPrefix=1
-        - CheckToken
 
 ribbon:
   ReadTimeout: 60000

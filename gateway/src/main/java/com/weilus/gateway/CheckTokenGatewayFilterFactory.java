@@ -3,6 +3,8 @@ package com.weilus.gateway;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.feign.clients.OauthClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
@@ -26,7 +28,7 @@ import java.util.*;
 @Component
 @ConditionalOnBean(OauthClient.class)
 public class CheckTokenGatewayFilterFactory extends AbstractGatewayFilterFactory<CheckTokenGatewayFilterFactory.CheckTokenConfig> {
-
+    private static final Logger log = LoggerFactory.getLogger(CheckTokenGatewayFilterFactory.class);
     @Autowired
     OauthClient oauthClient;
 
@@ -47,9 +49,8 @@ public class CheckTokenGatewayFilterFactory extends AbstractGatewayFilterFactory
                 return response(exchange, ErrorToekn.ERROR_TOEKN);
             }else {
                 Set<String> scope = extractScope(map);
-                String[] arr = StringUtils.tokenizeToStringArray(request.getURI().getRawPath(), "/");
-                System.out.println(Arrays.toString(arr));
-                String serviceId = arr[0];
+                String serviceId = StringUtils.tokenizeToStringArray(request.getURI().getRawPath(), "/")[0];
+                log.debug("检查能否访问域 {} , 当前支持访问 {}",serviceId,scope);
                 if(scope.contains(serviceId)){
                     return chain.filter(exchange);
                 }else {
