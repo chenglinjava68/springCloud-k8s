@@ -43,3 +43,5 @@ management:
   endpoint:
     health:
       show-details: always
+    restart:
+      enabled: true
