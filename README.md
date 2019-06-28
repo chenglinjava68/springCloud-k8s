@@ -1,10 +1,21 @@
 # springCloud
-### kubernetes权限
+
+### kuberbetes 镜像仓库访问权限
+```
+kubectl create secret
+docker-registry docker-registry-key
+--docker-username=646154945@qq.com
+--docker-password=[password]
+--docker-email=646154945@qq.com
+--docker-server=registry.cn-hangzhou.aliyuncs.com
+-n weilus-cloud
+```
+### kubernetes 服务访问权限
 ```
 kubectl create rolebinding default-view-binding \
 --clusterrole=view \
---serviceaccount=default:default \
---namespace=default
+--serviceaccount=weilus-cloud:default \
+--namespace=weilus-cloud
 ```
 
 ### 基础设施 db redis
@@ -20,11 +31,13 @@ kubectl apply -f https://raw.githubusercontent.com/weilus923/springCloud-k8s/mas
 > 2. 自动更新配置
 
 ```
-    kubectl edit configmap feign-call
+    kubectl edit configmap feign-call -n weilus-cloud
 ```
 
 ### 用户中心 oauth2
-
+```
+kubectl apply -f https://raw.githubusercontent.com/weilus923/springCloud-k8s/master/auth/k8s.yaml
+```
 #### 用户申请令牌
 ```
 curl -X POST -d 'grant_type=password&client_id=acme&username=liutaiq&password=123456' \
@@ -51,14 +64,17 @@ http://acau:acausecret@127.0.0.1:8080/oauth/token
 ```
 
 ### 网关 gateway
-
-> 更新路由
 ```
-    POST /actuator/gateway/routes/oauth HTTP/1.1
-    Host: 127.0.0.1:8088
-    Content-Type: application/json
+kubectl apply -f https://raw.githubusercontent.com/weilus923/springCloud-k8s/master/gateway/k8s.yaml
+```
+#### 更新路由
+```
+curl -H 'Content-Type: application/json' \
+-X POST --data='{"uri":"lb://oauth","predicates":["Path=/oauth/**"],"filters":["StripPrefix=1"]}' \
+http://10.96.10.96:8088/actuator/gateway/routes/oauth
 
-    {"uri":"lb://oauth","predicates":["Path=/oauth/**"],"filters":["StripPrefix=1"]}
+
+
 ```
 > 路由列表
 ```
