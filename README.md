@@ -72,32 +72,18 @@ kubectl apply -f https://raw.githubusercontent.com/weilus923/springCloud-k8s/mas
 curl -H 'Content-Type: application/json' \
 -X POST --data='{"uri":"lb://oauth","predicates":["Path=/oauth/**"],"filters":["StripPrefix=1"]}' \
 http://10.96.10.96:8088/actuator/gateway/routes/oauth
-
-
-
 ```
-> 路由列表
+#### 路由列表
 ```
-    GET /actuator/gateway/routes
+curl http://10.96.10.96:8088/actuator/gateway/routes
 ```
 
 ### 熔断 hystrix
-> 1. docker启动服务提供者
 ```
-docker run -d --name=feign-service \
--e "spring.application.name=feign-service" \
--e "server.port=8050" \
--e EUREKA_INSTANCE_IP-ADDRESS=192.168.198.128 \
-weilus.cloud/feign-hystrix
+kubectl apply -f https://raw.githubusercontent.com/weilus923/springCloud-k8s/master/feign-hystrix/k8s-feign-service.yaml
+kubectl apply -f https://raw.githubusercontent.com/weilus923/springCloud-k8s/master/feign-hystrix/k8s-feign-call.yaml
 ```
-> 2. docker启动服务消费者
-```
-docker run -d --name=feign-call \
--e "spring.application.name=feign-call" \
--e "server.port=8060" \
--e EUREKA_INSTANCE_IP-ADDRESS=192.168.198.128 \
-weilus.cloud/feign-hystrix
-```
+
 
 ### 微服务监控 admin
 
