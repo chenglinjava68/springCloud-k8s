@@ -11,9 +11,9 @@ feign:
   client:
     config:
       oauth:
-        logger-level: full    #NONE,BASIC,HEADERS,FULL
-        connect-timeout: 30000    #连接超时
-        read-timeout:  10000      #响应超时
+        logger-level: full
+        connect-timeout: 10000
+        read-timeout:  5000
 
 spring:
   profiles:

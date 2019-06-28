@@ -67,24 +67,9 @@ curl -X POST http://acau:acausecret@10.96.10.96:8088/oauth/oauth/token \
 ```
 kubectl apply -f https://raw.githubusercontent.com/weilus923/springCloud-k8s/master/gateway/k8s.yaml
 ```
-#### 新增/更新路由 /actuator/gateway/routes/{id}
+#### 配置路由
 ```
-curl -H 'Content-Type: application/json' -X POST http://10.96.10.96:8088/actuator/gateway/routes/oauth \
---data '{"uri":"lb://oauth","predicates":["Path=/oauth/**"],"filters":["StripPrefix=1"]}'
-
-curl -H 'Content-Type: application/json' -X POST http://10.96.10.96:8088/actuator/gateway/routes/feign-call \
---data '{"uri":"lb://feign-call","predicates":["Path=/feign-call/**"],"filters":["CheckToken","Hystrix=feignCallCmd","StripPrefix=1"]}'
-```
-
-#### 查询路由 /actuator/gateway/routes/{id}
-```
-curl -X GET http://10.96.10.96:8088/actuator/gateway/routes          //列表
-curl -X GET http://10.96.10.96:8088/actuator/gateway/routes/oauth    //查询有个
-```
-
-#### 删除路由 /actuator/gateway/routes/{id}
-```
-curl -X DELETE http://10.96.10.96:8088/actuator/gateway/routes/oauth
+kubectl edit configmap gateway -n weilus-cloud
 ```
 
 ### 熔断 hystrix
@@ -92,8 +77,7 @@ curl -X DELETE http://10.96.10.96:8088/actuator/gateway/routes/oauth
 kubectl apply -f https://raw.githubusercontent.com/weilus923/springCloud-k8s/master/feign-hystrix/k8s-feign-service.yaml
 kubectl apply -f https://raw.githubusercontent.com/weilus923/springCloud-k8s/master/feign-hystrix/k8s-feign-call.yaml
 
-curl -H 'Authorization: Bearer eb8ebbce-1ab0-4e2a-9427-0ffe0e384fc4' \
-http://10.96.10.96:8088/feign-call/test/sayHello
+curl -H 'Authorization: Bearer eb8ebbce-1ab0-4e2a-9427-0ffe0e384fc4' http://10.96.10.96:8088/feign-call/test/sayHello
 ```
 
 
