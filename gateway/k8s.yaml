@@ -1,3 +1,30 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: gateway
+  namespace: weilus-cloud
+data:
+  application.yml: |-
+      spring:
+        cloud:
+          gateway:
+            routes:
+            - id: oauth
+              uri: lb://oauth
+              predicates:
+              - Path=/oauth/oauth/token
+              filters:
+              - Hystrix=oauthCMD
+              - StripPrefix=1
+            - id: feign-call
+              uri: lb://feign-call
+              predicates:
+              - Path=/feign-call/test/**
+              filters:
+              - Hystrix=feignCallCMD
+              - CheckToken
+              - StripPrefix=1
+---
 kind: Service
 apiVersion: v1
 metadata:

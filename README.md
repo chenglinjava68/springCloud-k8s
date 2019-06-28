@@ -73,7 +73,7 @@ curl -H 'Content-Type: application/json' -X POST http://10.96.10.96:8088/actuato
 --data '{"uri":"lb://oauth","predicates":["Path=/oauth/**"],"filters":["StripPrefix=1"]}'
 
 curl -H 'Content-Type: application/json' -X POST http://10.96.10.96:8088/actuator/gateway/routes/feign-call \
---data '{"uri":"lb://feign-call","predicates":["Path=/feign-call/**"],"filters":["CheckToken","StripPrefix=1"]}'
+--data '{"uri":"lb://feign-call","predicates":["Path=/feign-call/**"],"filters":["CheckToken","Hystrix=feignCallCmd","StripPrefix=1"]}'
 ```
 
 #### 查询路由 /actuator/gateway/routes/{id}

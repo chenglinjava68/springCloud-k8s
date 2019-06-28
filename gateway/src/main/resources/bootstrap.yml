@@ -1,0 +1,15 @@
+spring:
+  profiles:
+    active: test
+  application:
+    name: gateway
+  cloud:
+    kubernetes:
+      name: ${spring.application.name}
+      namespace: default
+      config:
+        sources:
+        - namespace: weilus-cloud
+      reload:
+        mode: event
+        enabled: true
