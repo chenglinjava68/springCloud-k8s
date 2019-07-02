@@ -4,6 +4,7 @@ node{
     stage('更新代码') {
         sh 'git fetch'
         sh 'git diff --quiet master origin/master gateway'
+        echo '$?'
         checkout scm
     }
 

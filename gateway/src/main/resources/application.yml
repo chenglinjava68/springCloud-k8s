@@ -18,10 +18,6 @@ feign:
 spring:
   profiles:
     active: test
-  security:
-    user:
-      name: sba-user
-      password: sba-pwd
 
 ribbon:
   ReadTimeout: 60000
