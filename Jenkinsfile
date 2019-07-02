@@ -5,20 +5,25 @@ node{
 
     stage('更新代码') {
         sh 'git fetch'
-        steps {
-            script {
-                modules.each{
-                    try {
-                        sh "git diff --quiet master origin/master ${it}"  //exit 0 表示不存在更新
-                    } catch (e) {
-                        echo "${it}模块存在更新"
-                        deploy_modules.add(${it})
-                    }
-                }
-            }
+        try {
+            sh "git diff --quiet master origin/master ${modules[3]}"  //exit 0 表示不存在更新
+        } catch (e) {
+            deploy_modules.add(${modules[3]})
         }
+//        steps {
+//            script {
+//                modules.each{
+//                    try {
+//                        sh "git diff --quiet master origin/master ${it}"  //exit 0 表示不存在更新
+//                    } catch (e) {
+//                        echo "${it}模块存在更新"
+//                        deploy_modules.add(${it})
+//                    }
+//                }
+//            }
+//        }
         println deploy_modules.toString()
-        checkout scm
+//        checkout scm
     }
 
 //    stage('编译代码') {
