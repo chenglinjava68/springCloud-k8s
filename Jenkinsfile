@@ -1,14 +1,19 @@
 node{
     //curl "http://<USER:PASSWORD>@192.168.198.128:8081/job/springCloud/buildWithParameters?token=<TOKEN>&module=<MODULE>"
+    def modules = ['admin','auth','feign-hystrix','gateway','oauth-resource']
+    def deploy_modules
 
     stage('更新代码') {
         sh 'git fetch'
-        try{
-            sh 'git diff --quiet master origin/master gateway'
-        }
-        catch (e) {
-            println e
-        }
+        def code = sh('git diff --quiet master origin/master ${modules[i]}').exitcode
+        echo ${code}
+//        for (int i = 0;i < modules.size();++i){
+//            try{
+//                sh 'git diff --quiet master origin/master ${modules[i]}'  //exit 0 表示不存在更新
+//            }
+//            catch (e) {
+//            }
+//        }
 //        checkout scm
     }
 
