@@ -2,6 +2,8 @@ node{
     //curl "http://<USER:PASSWORD>@192.168.198.128:8081/job/springCloud/buildWithParameters?token=<TOKEN>&module=<MODULE>"
 
     stage('更新代码') {
+        sh 'git fetch'
+        sh 'git diff --quiet master origin/master gateway'
         checkout scm
     }
 
