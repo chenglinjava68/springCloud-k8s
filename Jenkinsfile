@@ -7,9 +7,9 @@ node{
         sh 'git fetch'
         for (int i = 0;i < modules.size();++i){
             try{
-                sh 'git diff --quiet master origin/master ${modules[i]}'  //exit 0 表示不存在更新
+                sh 'git diff --quiet master origin/master '${modules[i]}  //exit 0 表示不存在更新
             }catch (e) {
-                echo '${modules[i]}模块存在更新'
+                echo ${modules[i]}'模块存在更新'
                 deploy_modules.add(${modules[i]})
             }
         }
