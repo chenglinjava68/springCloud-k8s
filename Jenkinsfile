@@ -5,7 +5,7 @@ node{
 
     stage('更新代码') {
         sh 'git fetch'
-        def code = sh('git diff --quiet master origin/master gateway').exitcode
+        def code = sh returnCode: 1 ,script: "git diff --quiet master origin/master gateway"
         echo ${code}
 //        for (int i = 0;i < modules.size();++i){
 //            try{
