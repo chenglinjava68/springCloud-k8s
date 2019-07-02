@@ -5,16 +5,13 @@ node{
 
     stage('更新代码') {
         sh 'git fetch'
-        steps {
-            script {
-                for(module in modules){
-                    try {
-                        sh "git diff --quiet master origin/master "+module  //exit 0 表示不存在更新
-                    } catch (e) {
-                        echo module+"模块存在更新"
-                        deploy_modules.add(module)
-                    }
-                }
+        for(module in modules){
+            try {
+                sh "git diff --quiet master origin/master "+module  //exit 0 表示不存在更新
+            }
+            catch (e) {
+                echo module+"模块存在更新"
+                deploy_modules.add(module)
             }
         }
         println deploy_modules.toString()
