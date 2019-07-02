@@ -20,11 +20,6 @@ import reactor.core.publisher.Mono;
 
 import java.util.*;
 
-/**
- * @author liutaiq
- * @program springCloud
- * @date 2019-05-31 09:40
- **/
 @Component
 @ConditionalOnBean(OauthClient.class)
 public class CheckTokenGatewayFilterFactory extends AbstractGatewayFilterFactory<CheckTokenGatewayFilterFactory.CheckTokenConfig> {
