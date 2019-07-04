@@ -1,0 +1,53 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: mysql-conf-pv
+spec:
+  capacity:
+    storage: 20Mi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: mysql-pv
+  nsf:
+    path: /data/nfs-k8s/mysql/conf
+    server: 192.168.1.38
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: mysql-data-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: mysql-pv
+  nsf:
+    path: /data/nfs-k8s/mysql/data
+    server: 192.168.1.38
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mysql-conf-pvc
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Mi
+  storageClassName: mysql-conf-pv
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mysql-data-pvc
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: mysql-data-pv

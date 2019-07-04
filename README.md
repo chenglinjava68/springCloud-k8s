@@ -64,6 +64,9 @@ curl -X POST http://acau:acausecret@10.96.10.96:8088/oauth/oauth/token \
 ```
 
 ### 网关 gateway
+
+    统一外网入口,限流,负载,降级
+
 ```
 kubectl apply -f https://raw.githubusercontent.com/weilus923/springCloud-k8s/master/gateway/k8s.yaml
 ```
