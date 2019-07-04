@@ -44,5 +44,5 @@ spec:
           mountPath: /data
       volumes:
       - name: redis-data
-        hostPath:
-          path: /data/redis/redis-data
+        persistentVolumeClaim:
+          claimName: redis-data-pvc

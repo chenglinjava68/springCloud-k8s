@@ -20,8 +20,7 @@ kubectl create rolebinding default-view-binding \
 
 ### 基础设施 db redis
 ```
-kubectl apply -f https://raw.githubusercontent.com/weilus923/springCloud-k8s/master/k8s-mysql-svc.yaml
-kubectl apply -f https://raw.githubusercontent.com/weilus923/springCloud-k8s/master/k8s-redis-svc.yaml
+kubectl apply -f pvc-mysql.yaml -f svc-mysql.yaml -f pvc-redis.yaml -f svc-redis.yaml
 ```
 
 ### kubernetes 集中配置管理
