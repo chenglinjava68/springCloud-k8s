@@ -2,14 +2,15 @@ kind: PersistentVolume
 apiVersion: v1
 metadata:
   name: mysql-conf-pv
+  namespace: weilus-cloud
 spec:
   capacity:
     storage: 20Mi
   accessModes:
   - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: mysql-pv
-  nsf:
+  storageClassName: mysql-conf-pv
+  nfs:
     path: /data/nfs-k8s/mysql/conf
     server: 192.168.1.38
 ---
@@ -17,14 +18,15 @@ kind: PersistentVolume
 apiVersion: v1
 metadata:
   name: mysql-data-pv
+  namespace: weilus-cloud
 spec:
   capacity:
     storage: 1Gi
   accessModes:
   - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: mysql-pv
-  nsf:
+  storageClassName: mysql-data-pv
+  nfs:
     path: /data/nfs-k8s/mysql/data
     server: 192.168.1.38
 ---
@@ -32,6 +34,7 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: mysql-conf-pvc
+  namespace: weilus-cloud
 spec:
   accessModes:
   - ReadWriteOnce
@@ -44,6 +47,7 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: mysql-data-pvc
+  namespace: weilus-cloud
 spec:
   accessModes:
   - ReadWriteOnce
