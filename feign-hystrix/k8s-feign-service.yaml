@@ -14,8 +14,8 @@ metadata:
 spec:
   ports:
   - port: 8081
-    protocol: TCP
     targetPort: 8081
+  clusterIP: None
   selector:
     app: feign-service
 ---
