@@ -37,12 +37,8 @@ metadata:
   namespace: weilus-cloud
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: oauth
   template:
     metadata:
-      name: oauth
       namespace: weilus-cloud
       labels:
         app: oauth

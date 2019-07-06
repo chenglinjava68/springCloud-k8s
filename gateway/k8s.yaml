@@ -46,18 +46,14 @@ metadata:
   namespace: weilus-cloud
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: gateway
   template:
     metadata:
-      name: gateway
       namespace: weilus-cloud
       labels:
         app: gateway
     spec:
       containers:
-      - name: gateway
+      - name: k8s-gateway
         image: registry.cn-hangzhou.aliyuncs.com/weilus923/gateway-k8s:1.0
         imagePullPolicy: IfNotPresent
         ports:

@@ -26,18 +26,14 @@ metadata:
   namespace: weilus-cloud
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: feign-call
   template:
     metadata:
-      name: feign-call
       namespace: weilus-cloud
       labels:
         app: feign-call
     spec:
       containers:
-      - name: feign-call
+      - name: k8s-feign-call
         image: registry.cn-hangzhou.aliyuncs.com/weilus923/feign-hystrix-k8s:1.0
         imagePullPolicy: IfNotPresent
         env:
