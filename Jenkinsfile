@@ -1,5 +1,5 @@
 node{
-    //curl "http://<USER:PASSWORD>@192.168.198.128:8081/job/springCloud/buildWithParameters?token=<TOKEN>"
+    //curl "http://<USER:PASSWORD>@192.168.198.128:8081/job/springCloud/build?token=<TOKEN>"
     def modules = ['admin','auth','feign-hystrix','gateway','oauth-resource']
     def deploy_modules = []
 
