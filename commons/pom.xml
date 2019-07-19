@@ -9,8 +9,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>weilus.cloud</groupId>
     <artifactId>commons</artifactId>
-
+    <packaging>jar</packaging>
+    <version>0.0.1-SNAPSHOT</version>
 
     <dependencies>
         <dependency>
