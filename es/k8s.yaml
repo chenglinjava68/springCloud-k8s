@@ -18,6 +18,9 @@ metadata:
   namespace: weilus-cloud
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: es-search
   template:
     metadata:
       namespace: weilus-cloud
