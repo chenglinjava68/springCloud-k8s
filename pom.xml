@@ -27,6 +27,7 @@
 	    <module>admin</module>
 	  	<module>commons</module>
 	  	<module>gateway</module>
+	  <module>es</module>
   </modules>
 		
 	<dependencyManagement>
@@ -97,16 +98,16 @@
 	    </dependencies>
 	</dependencyManagement>
 
-	<distributionManagement>
-		<repository>
-			<id>releases</id>
-			<url>http://192.168.1.38:31881/repository/maven-releases/</url>
-		</repository>
-		<snapshotRepository>
-			<id>snapshots</id>
-			<url>http://192.168.1.38:31881/repository/maven-snapshots/</url>
-		</snapshotRepository>
-	</distributionManagement>
+	<!--<distributionManagement>-->
+		<!--<repository>-->
+			<!--<id>releases</id>-->
+			<!--<url>http://192.168.1.38:31881/repository/maven-releases/</url>-->
+		<!--</repository>-->
+		<!--<snapshotRepository>-->
+			<!--<id>snapshots</id>-->
+			<!--<url>http://192.168.1.38:31881/repository/maven-snapshots/</url>-->
+		<!--</snapshotRepository>-->
+	<!--</distributionManagement>-->
 
 	<build>
 		<pluginManagement>
