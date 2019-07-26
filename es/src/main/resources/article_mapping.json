@@ -1,0 +1,39 @@
+{
+  "article": {
+    "properties": {
+        "id": {
+            "type": "long"
+        },
+        "title": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+        },
+        "content": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+        },
+        "author": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+        },
+        "postTime": {
+            "type": "long"
+        }
+    }
+  }
+}

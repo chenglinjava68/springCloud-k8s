@@ -2,8 +2,7 @@ package com.weilus.es;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.data.elasticsearch.annotations.Mapping;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -14,28 +13,26 @@ import java.util.Date;
  * @date 2019-07-24 15:18
  **/
 @Document(indexName="test",type="article",shards=2,replicas=0)
+@Mapping(mappingPath = "article_mapping.json")
 public class Article implements Serializable {
     @Id
     private Long id;
+
     /**
      * 标题
      */
-    @Field(type = FieldType.Text,searchAnalyzer = "ik_max_word", analyzer = "ik_max_word")
     private String title;
     /**
      * 内容
      */
-    @Field(type = FieldType.Text)
     private String content;
     /**
      * 发表时间
      */
-    @Field(type = FieldType.Date)
     private Date postTime;
     /**
      * 作者
      */
-    @Field(type = FieldType.Text)
     private String author;
 
     public Long getId() {
