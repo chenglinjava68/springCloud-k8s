@@ -1,4 +1,4 @@
-FROM openjdk:8-jre-alpine
+FROM openjdk:8-jdk-alpine
 MAINTAINER 646154945@qq.com
 ADD target/es-1.0.jar /app.jar
 VOLUME ["/data/logs"]
