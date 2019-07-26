@@ -1,0 +1,41 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: es-search
+  namespace: weilus-cloud
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    app: es-search
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: es-search
+  namespace: weilus-cloud
+spec:
+  replicas: 1
+  template:
+    metadata:
+      namespace: weilus-cloud
+      labels:
+        app: es-search
+    spec:
+      containers:
+      - name: es-search
+        image: registry.cn-hangzhou.aliyuncs.com/weilus923/es-k8s:1.1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: config-logs
+          mountPath: /data/logs
+      volumes:
+      - name: config-logs
+        hostPath:
+          path: /data/logs
+      imagePullSecrets:
+      - name: docker-registry-key
