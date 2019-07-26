@@ -11,4 +11,5 @@ spring:
 logging:
   file: ${log.dir:/data/logs}/${spring.application.name}.log
   level:
+    com.weilus: DEBUG
     org.elasticsearch: DEBUG
