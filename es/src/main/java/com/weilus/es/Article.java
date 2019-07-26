@@ -3,6 +3,7 @@ package com.weilus.es;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -19,27 +20,22 @@ public class Article implements Serializable {
     /**
      * 标题
      */
-    @Field(analyzer="ik_smart",searchAnalyzer = "ik_smart")
+    @Field(type = FieldType.Text,searchAnalyzer = "ik_max_word", analyzer = "ik_max_word")
     private String title;
-    /**
-     * 摘要
-     */
-    private String abstracts;
     /**
      * 内容
      */
+    @Field(type = FieldType.Text)
     private String content;
     /**
      * 发表时间
      */
+    @Field(type = FieldType.Date)
     private Date postTime;
-    /**
-     * 点击率
-     */
-    private Long clickCount;
     /**
      * 作者
      */
+    @Field(type = FieldType.Text)
     private String author;
 
     public Long getId() {
@@ -58,13 +54,6 @@ public class Article implements Serializable {
         this.title = title;
     }
 
-    public String getAbstracts() {
-        return abstracts;
-    }
-
-    public void setAbstracts(String abstracts) {
-        this.abstracts = abstracts;
-    }
 
     public String getContent() {
         return content;
@@ -82,14 +71,6 @@ public class Article implements Serializable {
         this.postTime = postTime;
     }
 
-    public Long getClickCount() {
-        return clickCount;
-    }
-
-    public void setClickCount(Long clickCount) {
-        this.clickCount = clickCount;
-    }
-
     public String getAuthor() {
         return author;
     }
@@ -103,10 +84,8 @@ public class Article implements Serializable {
         return "Article{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", abstracts='" + abstracts + '\'' +
                 ", content='" + content + '\'' +
                 ", postTime=" + postTime +
-                ", clickCount=" + clickCount +
                 ", author='" + author + '\'' +
                 '}';
     }

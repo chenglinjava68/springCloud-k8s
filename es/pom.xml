@@ -13,6 +13,9 @@
     <packaging>jar</packaging>
     <version>1.0</version>
 
+    <!--<properties>-->
+        <!--<elasticsearch>6.2.2</elasticsearch>-->
+    <!--</properties>-->
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -21,17 +24,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.elasticsearch.client</groupId>
-                    <artifactId>transport</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.elasticsearch.client</groupId>
-            <artifactId>transport</artifactId>
-            <version>6.2.2</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
