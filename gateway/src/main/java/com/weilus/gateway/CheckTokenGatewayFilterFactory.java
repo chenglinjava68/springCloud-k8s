@@ -1,7 +1,5 @@
 package com.weilus.gateway;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.feign.clients.OauthClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,13 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
-import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 import java.util.*;
@@ -37,11 +35,15 @@ public class CheckTokenGatewayFilterFactory extends AbstractGatewayFilterFactory
             ServerHttpRequest request = exchange.getRequest();
             String token = extractToken(request);
             if(StringUtils.isEmpty(token)){
-                return response(exchange,ErrorToekn.REQUIRED_TOKEN);
+                ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .body(BodyInserters.fromObject(ErrorToekn.REQUIRED_TOKEN));
             }
             Map<String,String> map = oauthClient.checkToken(token);
             if (map.containsKey("error")) {
-                return response(exchange, ErrorToekn.ERROR_TOEKN);
+                ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .body(BodyInserters.fromObject(ErrorToekn.ERROR_TOEKN));
             }else {
                 Set<String> scope = extractScope(map);
                 String serviceId = StringUtils.tokenizeToStringArray(request.getURI().getRawPath(), "/")[0];
@@ -49,9 +51,12 @@ public class CheckTokenGatewayFilterFactory extends AbstractGatewayFilterFactory
                 if(scope.contains(serviceId)){
                     return chain.filter(exchange);
                 }else {
-                    return response(exchange,ErrorToekn.ERROR_SCOPE);
+                    ServerResponse.ok()
+                            .contentType(MediaType.APPLICATION_JSON_UTF8)
+                            .body(BodyInserters.fromObject(ErrorToekn.ERROR_SCOPE));
                 }
             }
+            return Mono.empty();
         };
     }
 
@@ -71,23 +76,6 @@ public class CheckTokenGatewayFilterFactory extends AbstractGatewayFilterFactory
         }
     }
 
-    private Mono response(ServerWebExchange exchange,ErrorToekn error){
-        ServerHttpResponse response = exchange.getResponse();
-        HttpHeaders httpHeaders = response.getHeaders();
-        httpHeaders.add("Content-Type", "application/json; charset=UTF-8");
-        byte[] resp = new byte[0];
-        try {
-            Map<String,String> err = new HashMap<>();
-            err.put("code",error.name());
-            err.put("msg",error.getMsg());
-            resp = new ObjectMapper().writeValueAsBytes(err);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        DataBuffer bodyBuffer = response.bufferFactory().wrap(resp);//设置body
-        return response.writeWith(Mono.just(bodyBuffer));
-    }
-
     private String extractToken(ServerHttpRequest request){
         String authorization = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
         if(!StringUtils.isEmpty(authorization) && authorization.startsWith("Bearer ")){
@@ -103,11 +91,11 @@ public class CheckTokenGatewayFilterFactory extends AbstractGatewayFilterFactory
         if (map.containsKey("scope")) {
             Object scopeObj = map.get("scope");
             if (String.class.isInstance(scopeObj)) {
-                scope = new LinkedHashSet<String>(Arrays.asList(String.class.cast(scopeObj).split(" ")));
+                scope = new LinkedHashSet<>(Arrays.asList(String.class.cast(scopeObj).split(" ")));
             } else if (Collection.class.isAssignableFrom(scopeObj.getClass())) {
                 @SuppressWarnings("unchecked")
                 Collection<String> scopeColl = (Collection<String>) scopeObj;
-                scope = new LinkedHashSet<String>(scopeColl);	// Preserve ordering
+                scope = new LinkedHashSet<>(scopeColl);	// Preserve ordering
             }
         }
         return scope;
